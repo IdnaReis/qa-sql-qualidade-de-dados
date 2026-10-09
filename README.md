@@ -1,35 +1,39 @@
 # 🗄️ Qualidade de Dados com SQL
 
-![SQL](https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white)
-[![Validações](https://github.com/IdnaReis/qa-sql-qualidade-de-dados/actions/workflows/testes.yml/badge.svg?branch=main)](https://github.com/IdnaReis/qa-sql-qualidade-de-dados/actions/workflows/testes.yml)
+<!-- COLE AQUI OS SELOS QUE JÁ EXISTEM NO README ATUAL (SQL, SQLite, Python, Pytest e Actions) -->
 
 Projeto de **QA de Dados**: 10 validações em SQL que encontram problemas de qualidade na base de um e-commerce fictício, com testes automatizados em Pytest, relatório gerado automaticamente e CI no GitHub Actions.
 
-Une minha experiência de mais de 12 anos em **validação de dados, análise de crédito e prevenção a fraudes** com a prática de QA.
+Une minha experiência de mais de 6 anos em **validação de dados, análise de crédito e prevenção a fraudes** com a prática de QA.
+
+> A base de dados é fictícia e foi criada com problemas inseridos de propósito, para que cada validação tenha algo real a encontrar.
 
 ## 🔎 Validações
 
 | ID | Dimensão | O que verifica | Problemas encontrados |
-|---|---|---|---|
-| [V01](sql/validacoes/V01_email_nulo.sql) | Completude | Clientes sem e-mail | 1 |
-| [V02](sql/validacoes/V02_email_duplicado.sql) | Unicidade | E-mail usado por mais de um cliente | 1 |
-| [V03](sql/validacoes/V03_email_formato.sql) | Validade | E-mail sem "@" ou sem domínio | 2 |
-| [V04](sql/validacoes/V04_uf_invalida.sql) | Validade | UF fora da lista oficial | 2 |
-| [V05](sql/validacoes/V05_pedido_sem_cliente.sql) | Integridade referencial | Pedido de cliente inexistente | 1 |
-| [V06](sql/validacoes/V06_pedido_antes_do_cadastro.sql) | Consistência temporal | Pedido antes do cadastro do cliente | 1 |
-| [V07](sql/validacoes/V07_total_diferente_dos_itens.sql) | Consistência | Total do pedido ≠ soma dos itens | 2 |
-| [V08](sql/validacoes/V08_item_quantidade_preco.sql) | Validade | Item com quantidade ou preço ≤ 0 | 2 |
-| [V09](sql/validacoes/V09_pagamento_divergente.sql) | Regra de negócio | Pedido "pago" sem pagamento ou com valor divergente | 2 |
-| [V10](sql/validacoes/V10_data_futura.sql) | Validade | Pedido com data no futuro | 1 |
+|----|----------|----------------|-----------------------|
+| V01 | Completude | Clientes sem e-mail | 1 |
+| V02 | Unicidade | E-mail usado por mais de um cliente | 1 |
+| V03 | Validade | E-mail sem "@" ou sem domínio | 2 |
+| V04 | Validade | UF fora da lista oficial | 2 |
+| V05 | Integridade referencial | Pedido de cliente inexistente | 1 |
+| V06 | Consistência temporal | Pedido antes do cadastro do cliente | 1 |
+| V07 | Consistência | Total do pedido ≠ soma dos itens | 2 |
+| V08 | Validade | Item com quantidade ou preço ≤ 0 | 2 |
+| V09 | Regra de negócio | Pedido "pago" sem pagamento ou com valor divergente | 2 |
+| V10 | Validade | Pedido com data no futuro | 1 |
 
-**Total: 15 registros com problema.** Detalhes em [relatório de qualidade](relatorios/relatorio-qualidade.md).
+No total, as 10 validações encontram **15 problemas** na base. As consultas estão na pasta [`sql/validacoes/`](sql/validacoes/).
 
 ## 🧠 Técnicas de SQL usadas
 
-`LEFT JOIN ... IS NULL` (registros órfãos) · `GROUP BY` + `HAVING` (duplicidade e somas) · `LIKE` e `INSTR` (formato) · `NOT IN` (domínio de valores) · `CASE WHEN` (classificação do problema) · comparação de datas · `ABS()` com tolerância para valores decimais.
+- `LEFT JOIN ... IS NULL` (registros órfãos)
+- `GROUP BY` + `HAVING` (duplicidade e somas)
+- `LIKE` e `INSTR` (formato)
+- `NOT IN` (domínio de valores)
+- `CASE WHEN` (classificação do problema)
+- Comparação de datas
+- `ABS()` com tolerância para valores decimais
 
 ## 🧪 Testes
 
@@ -45,25 +49,27 @@ python validar.py      # gera relatorios/relatorio-qualidade.md
 python -m pytest -v    # roda os testes
 ```
 
+O relatório é gerado em `relatorios/relatorio-qualidade.md`. Os testes também rodam automaticamente no GitHub Actions a cada envio de código.
+
 ## 📂 Estrutura
 
 ```
 qa-sql-qualidade-de-dados/
-├── banco/schema.sql            # Criação das tabelas
-├── banco/dados.sql             # Dados fictícios com problemas inseridos
-├── sql/validacoes/             # 10 consultas de validação (V01 a V10)
-├── tests/                      # Testes Pytest das validações
-├── relatorios/                 # Relatório gerado pelo validar.py
-├── docs/modelo-de-dados.md     # Tabelas e dimensões de qualidade
-├── validar.py                  # Executa as validações e gera o relatório
-└── .github/workflows/          # CI no GitHub Actions
+├── banco/schema.sql           # Criação das tabelas
+├── banco/dados.sql            # Dados fictícios com problemas inseridos
+├── sql/validacoes/            # 10 consultas de validação (V01 a V10)
+├── tests/                     # Testes Pytest das validações
+├── relatorios/                # Relatório gerado pelo validar.py
+├── docs/modelo-de-dados.md    # Tabelas e dimensões de qualidade
+├── validar.py                 # Executa as validações e gera o relatório
+└── .github/workflows/         # CI no GitHub Actions
 ```
+
+Veja também o [modelo de dados](docs/modelo-de-dados.md), com as tabelas e as dimensões de qualidade usadas.
 
 ## 👩‍💻 Autora
 
-**Idna Reis**
+**Idna Reis**, QA Júnior em transição de carreira, com mais de 6 anos de experiência anterior em validação de dados, análise de crédito e prevenção a fraudes.
 
-QA | Analista de Qualidade | Automação de Testes
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/idna-reis)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/IdnaReis)
+- LinkedIn: [linkedin.com/in/idna-reis](https://www.linkedin.com/in/idna-reis)
+- GitHub: [github.com/IdnaReis](https://github.com/IdnaReis)
