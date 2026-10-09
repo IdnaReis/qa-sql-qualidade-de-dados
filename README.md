@@ -8,7 +8,7 @@
 
 Projeto de **QA de Dados**: 10 validações em SQL que encontram problemas de qualidade na base de um e-commerce fictício, com testes automatizados em Pytest, relatório gerado automaticamente e CI no GitHub Actions.
 
-Une minha experiência de mais de 12 anos em **validação de dados, análise de crédito e prevenção a fraudes** com a prática de QA.
+Une minha experiência de mais de 6 anos em **validação de dados, análise de crédito e prevenção a fraudes** com a prática de QA.
 
 ## 🔎 Validações
 
